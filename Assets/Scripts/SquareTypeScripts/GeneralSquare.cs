@@ -28,11 +28,21 @@ public class GeneralSquare : MonoBehaviour {
     public virtual void Act()
     {
         int i;
-        do {
-            i = Random.Range(0, enemyPlayer.mySquares.Count);
-        } while (enemyPlayer.mySquares[i].gameObject.activeInHierarchy);
+        GeneralSquare target;
+        if (enemyPlayer.HasCombatSquare())
+        {
+            do
+            {
+                i = Random.Range(0, enemyPlayer.mySquares.Count);
+            } while (enemyPlayer.mySquares[i].gameObject.activeInHierarchy);
 
-        enemyPlayer.mySquares[i].ApplyDamage(attack);
+            target = enemyPlayer.mySquares[i];
+        }
+        else
+            target = enemyPlayer.MainSquare;
+
+
+        target.ApplyDamage(attack);
     }
 
     public virtual void ResetStatus()

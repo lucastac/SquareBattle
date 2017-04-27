@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\ChangingSizeAnimation.cs" />
+    <Compile Include="Assets\Scripts\JackPot.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\SquareTypeScripts\GeneralSquare.cs" />
     <Compile Include="Assets\Scripts\SquareTypeScripts\ShooterSquare.cs" />
