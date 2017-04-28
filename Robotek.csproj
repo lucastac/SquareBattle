@@ -82,7 +82,9 @@
     <Compile Include="Assets\Scripts\JackPot.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\SquareTypeScripts\GeneralSquare.cs" />
+    <Compile Include="Assets\Scripts\SquareTypeScripts\HealSquare.cs" />
     <Compile Include="Assets\Scripts\SquareTypeScripts\ShooterSquare.cs" />
+    <Compile Include="Assets\Scripts\SquareTypeScripts\TankySquare.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
