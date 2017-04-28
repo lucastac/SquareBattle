@@ -40,7 +40,7 @@ public class GeneralSquare : MonoBehaviour {
             do
             {
                 i = Random.Range(0, myPlayer.enemyPlayer.mySquares.Count);
-            } while (myPlayer.enemyPlayer.mySquares[i].gameObject.activeInHierarchy);
+            } while (!myPlayer.enemyPlayer.mySquares[i].gameObject.activeInHierarchy);
 
             target = myPlayer.enemyPlayer.mySquares[i];
         }
@@ -67,7 +67,7 @@ public class GeneralSquare : MonoBehaviour {
             gameObject.SetActive(false);
 
         GameObject popup = Instantiate<GameObject>(popUpPrefab, transform.position, Quaternion.identity);
-        Text t = popup.GetComponent<Text>();
+        Text t = popup.GetComponentInChildren<Text>();
         t.text = "-" + damage;
         t.color = Color.red;
     }
@@ -77,7 +77,7 @@ public class GeneralSquare : MonoBehaviour {
         health = Mathf.Min(maxHealth, health + amountHeal);
 
         GameObject popup = Instantiate<GameObject>(popUpPrefab, transform.position, Quaternion.identity);
-        Text t = popup.GetComponent<Text>();
+        Text t = popup.GetComponentInChildren<Text>();
         t.text = "+" + amountHeal;
         t.color = Color.green;
     }

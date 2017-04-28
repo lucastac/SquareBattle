@@ -25,7 +25,7 @@ public class HUDSquare : MonoBehaviour {
         if (targetSquare == null) return;
 
         if (levelText != null) levelText.text = targetSquare.level.ToString();
-        if (healthText != null) healthText.text = targetSquare.maxHealth + " / " + targetSquare.health;
+        if (healthText != null) healthText.text = targetSquare.health + " / " + targetSquare.maxHealth;
         if (expText != null) expText.text = targetSquare.level < 3 ? targetSquare.experience + " / " + targetSquare.level * 2 : "0 / 0";
 
         if(healthSlider != null)

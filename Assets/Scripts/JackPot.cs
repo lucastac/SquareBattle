@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class JackPot : MonoBehaviour {
 
+    public GameControl gamecontrol; //reference to the game control
     public Player myPlayer; //target player of the jackpot
+    public Button buttonRoll; //reference to the roll button
     public Text buttonText; //reference to the roll button text 
     public float[] periodRolling; //time for each jackpot slot change value
     private float[] timeCount = { 0, 0, 0 }; //used for counting the time for each slot
@@ -28,9 +30,14 @@ public class JackPot : MonoBehaviour {
         iconsPerJackpot.Add(iconsJackpotSlot3);
 
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void OnEnable()
+    {
+        buttonRoll.gameObject.SetActive(true);
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 
@@ -81,7 +88,13 @@ public class JackPot : MonoBehaviour {
             timeCount[i] = 0;
         }
         buttonText.text = "Roll !";
+        buttonRoll.gameObject.SetActive(false);
+        Invoke("EndPlayerTurn", 1);
     }
 
+    private void EndPlayerTurn()
+    {
+        gamecontrol.EndTurn();        
+    }
 
 }

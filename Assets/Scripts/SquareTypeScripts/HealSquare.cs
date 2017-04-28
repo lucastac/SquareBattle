@@ -18,7 +18,7 @@ public class HealSquare : GeneralSquare {
             do
             {
                 i = Random.Range(0, myPlayer.mySquares.Count);
-            } while (myPlayer.mySquares[i].gameObject.activeInHierarchy);
+            } while (!myPlayer.mySquares[i].gameObject.activeInHierarchy);
 
             myPlayer.mySquares[i].Heal(attack);
         }

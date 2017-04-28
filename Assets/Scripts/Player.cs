@@ -7,7 +7,7 @@ public class Player : MonoBehaviour {
     public List<GeneralSquare> mySquares;
     public GeneralSquare MainSquare;
     public Player enemyPlayer;
-
+    public JackPot myJackpot;
 	// Use this for initialization
 	void Start () {
 		
