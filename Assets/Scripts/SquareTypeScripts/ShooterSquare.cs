@@ -5,6 +5,12 @@ using UnityEngine;
 public class ShooterSquare : GeneralSquare {
     public int number_of_attacks = 2;
 
+    public override void Start()
+    {
+        base.Start();
+        gameObject.SetActive(false);
+    }
+
     public override void LatedAct()
     {
         for (int i = 0; i < number_of_attacks; i++)

@@ -6,6 +6,12 @@ public class HealSquare : GeneralSquare {
 
     public int number_of_heal_targets = 1;
 
+    public override void Start()
+    {
+        base.Start();
+        gameObject.SetActive(false);
+    }
+
     public override void LatedAct()
     {
         if (level == 3)

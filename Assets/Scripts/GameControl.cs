@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class GameControl : MonoBehaviour {
 
+    public static GameControl singleton;
+
     public Player[] players;
     public int turn = 0;
+    private bool isFirstTurn = true; //on the end of first turn, no one attacks
 	// Use this for initialization
 	void Start () {
+        singleton = this;
+
         for (int i = 1; i < players.Length; i++)
             players[i].myJackpot.gameObject.SetActive(false);
 
@@ -24,7 +29,15 @@ public class GameControl : MonoBehaviour {
         
 
         turn = (turn + 1) % players.Length;
-        foreach(Player p in players)
+        Invoke("StartTurn", 5);
+
+        if(isFirstTurn)
+        {
+            isFirstTurn = false;
+            return;
+        }
+
+        foreach (Player p in players)
         {
             foreach(GeneralSquare gs in p.mySquares)
             {
@@ -33,7 +46,7 @@ public class GameControl : MonoBehaviour {
             }
         }
 
-        Invoke("StartTurn", 5);
+        
     }
 
     private void StartTurn()

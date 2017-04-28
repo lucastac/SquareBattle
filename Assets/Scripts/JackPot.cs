@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class JackPot : MonoBehaviour {
 
-    public GameControl gamecontrol; //reference to the game control
     public Player myPlayer; //target player of the jackpot
     public Button buttonRoll; //reference to the roll button
     public Text buttonText; //reference to the roll button text 
@@ -89,12 +88,14 @@ public class JackPot : MonoBehaviour {
         }
         buttonText.text = "Roll !";
         buttonRoll.gameObject.SetActive(false);
+        myPlayer.ProcessJackpotResult(indexes, 0);
+
         Invoke("EndPlayerTurn", 1);
     }
 
     private void EndPlayerTurn()
     {
-        gamecontrol.EndTurn();        
+        GameControl.singleton.EndTurn();        
     }
 
 }

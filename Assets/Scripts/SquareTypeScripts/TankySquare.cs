@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class TankySquare : GeneralSquare {
 
+    public override void Start()
+    {
+        base.Start();
+        gameObject.SetActive(false);
+    }
+
     protected override void LevelUp()
     {
         maxHealth += 3;
