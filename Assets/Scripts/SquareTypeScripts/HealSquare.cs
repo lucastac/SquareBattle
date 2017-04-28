@@ -6,7 +6,7 @@ public class HealSquare : GeneralSquare {
 
     public int number_of_heal_targets = 1;
 
-    public override void Act()
+    public override void LatedAct()
     {
         if (level == 3)
             myPlayer.MainSquare.Heal(attack);
@@ -34,6 +34,8 @@ public class HealSquare : GeneralSquare {
     {
         number_of_heal_targets++;
         attack++;
+        maxHealth++;
+        health++;
         base.LevelUp();
     }
 }

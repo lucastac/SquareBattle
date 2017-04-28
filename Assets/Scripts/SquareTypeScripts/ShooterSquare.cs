@@ -5,10 +5,15 @@ using UnityEngine;
 public class ShooterSquare : GeneralSquare {
     public int number_of_attacks = 2;
 
-    public override void Act()
+    public override void LatedAct()
     {
-        for(int i = 0; i < number_of_attacks; i++)
-            base.Act();
+        for (int i = 0; i < number_of_attacks; i++)
+            Invoke("LatedShoot", 0.5f * i);
+    }
+
+    private void LatedShoot()
+    {
+        base.LatedAct();
     }
 
     public override void ResetStatus()

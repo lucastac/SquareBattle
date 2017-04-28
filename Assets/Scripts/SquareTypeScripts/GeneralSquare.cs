@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GeneralSquare : MonoBehaviour {
     public int maxHealth; //initial and the maximum amount of health of a square
@@ -10,7 +11,7 @@ public class GeneralSquare : MonoBehaviour {
     public int experience;//actual experience (2 for level 1-2 and 4 for level 2-3)
 
     public Player myPlayer;
-    public Player enemyPlayer;
+    public GameObject popUpPrefab; //prefab for a popUp
 
     protected int initialMaxHealth; //maxHealth on level 1
     protected int initialAttack; //attack on level 1
@@ -25,21 +26,26 @@ public class GeneralSquare : MonoBehaviour {
 		
 	}
 
-    public virtual void Act()
+    public void Act()
+    {
+        Invoke("LatedAct", 0.5f);
+    }
+
+    public virtual void LatedAct()
     {
         int i;
         GeneralSquare target;
-        if (enemyPlayer.HasCombatSquare())
+        if (myPlayer.enemyPlayer.HasCombatSquare())
         {
             do
             {
-                i = Random.Range(0, enemyPlayer.mySquares.Count);
-            } while (enemyPlayer.mySquares[i].gameObject.activeInHierarchy);
+                i = Random.Range(0, myPlayer.enemyPlayer.mySquares.Count);
+            } while (myPlayer.enemyPlayer.mySquares[i].gameObject.activeInHierarchy);
 
-            target = enemyPlayer.mySquares[i];
+            target = myPlayer.enemyPlayer.mySquares[i];
         }
         else
-            target = enemyPlayer.MainSquare;
+            target = myPlayer.enemyPlayer.MainSquare;
 
 
         target.ApplyDamage(attack);
@@ -59,11 +65,21 @@ public class GeneralSquare : MonoBehaviour {
         health -= damage;
         if (health <= 0)
             gameObject.SetActive(false);
+
+        GameObject popup = Instantiate<GameObject>(popUpPrefab, transform.position, Quaternion.identity);
+        Text t = popup.GetComponent<Text>();
+        t.text = "-" + damage;
+        t.color = Color.red;
     }
 
     public virtual void Heal(int amountHeal)
     {
         health = Mathf.Min(maxHealth, health + amountHeal);
+
+        GameObject popup = Instantiate<GameObject>(popUpPrefab, transform.position, Quaternion.identity);
+        Text t = popup.GetComponent<Text>();
+        t.text = "+" + amountHeal;
+        t.color = Color.green;
     }
 
     public virtual void EarnExperience(int xp)

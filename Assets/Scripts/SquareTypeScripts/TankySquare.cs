@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankySquare : MonoBehaviour {
+public class TankySquare : GeneralSquare {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    protected override void LevelUp()
+    {
+        maxHealth += 3;
+        health += 3;
+        attack += 2;
+        base.LevelUp();
+    }
 }
