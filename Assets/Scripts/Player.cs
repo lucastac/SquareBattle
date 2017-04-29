@@ -6,6 +6,7 @@ public partial class Player : MonoBehaviour {
 
     public List<GeneralSquare> mySquares;
     public GeneralSquare MainSquare;
+    public GeneralSquare Barrier;
     public Player enemyPlayer;
     public JackPot myJackpot;
 	// Use this for initialization
@@ -18,6 +19,11 @@ public partial class Player : MonoBehaviour {
 		
 	}
 
+    public bool HasBarrier()
+    {
+        return Barrier.gameObject.activeInHierarchy;
+    }
+
     public bool HasCombatSquare()
     {
         foreach(GeneralSquare square in mySquares)
@@ -27,6 +33,26 @@ public partial class Player : MonoBehaviour {
         }
 
         return false;
+    }
+
+    public GeneralSquare GiveRandomTarget(bool IncludeBarrier = true)
+    {
+        GeneralSquare target;
+        int i;
+        if (HasBarrier() && IncludeBarrier)
+            target = Barrier;
+        else if (HasCombatSquare())
+        {
+            do
+            {
+                i = Random.Range(0, enemyPlayer.mySquares.Count);
+            } while (!mySquares[i].gameObject.activeInHierarchy);
+            target = mySquares[i];
+        }
+        else
+            target = MainSquare;
+
+        return target;
     }
 
     public void ProcessJackpotResult(int[] result, int type)

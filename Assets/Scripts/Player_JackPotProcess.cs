@@ -20,7 +20,38 @@ public partial class Player : MonoBehaviour {
 
     private void ProcessUtilityJackpot(int[] result)
     {
+        int tierDrain = 0, tierBarrier = 0, tierBonusAtk = 0;
 
+        foreach (int i in result)
+        {
+            if (i == 0)
+                tierDrain++;
+            else if (i == 1)
+                tierBarrier++;
+            else
+                tierBonusAtk++;
+        }
+
+        bool[] called = { false, false, false };
+
+        for (int i = 0; i < result.Length; i++)
+        {
+            if (result[i] == 0 && !called[0])
+            {
+                called[0] = true;
+                DrainUtility(tierDrain);
+            }
+            else if (result[i] == 1 && !called[1])
+            {
+                called[1] = true;
+                BarrierUtility(tierBarrier);
+            }
+            else if (result[i] == 2 && !called[2])
+            {
+                called[2] = true;
+                BonusAtkUtility(tierBonusAtk);
+            }
+        }
     }
 
     private void ProcessOffensiveJackpot(int[] result)
@@ -39,17 +70,19 @@ public partial class Player : MonoBehaviour {
 
         bool[] called = { false, false, false };
 
-        for(int i = 0; i < result.Length; i++)
+        for (int i = 0; i < result.Length; i++)
         {
-            if(result[i] == 0 && !called[0])
+            if (result[i] == 0 && !called[0])
             {
                 called[0] = true;
                 AreaOffensive(tierArea);
-            }else if (result[i] == 1 && !called[1])
+            }
+            else if (result[i] == 1 && !called[1])
             {
                 called[1] = true;
                 BlockOffensive(tierBlock);
-            }else if (result[i] == 2 && !called[2])
+            }
+            else if (result[i] == 2 && !called[2])
             {
                 called[2] = true;
                 DirectOffensive(tierDirect);
@@ -57,14 +90,58 @@ public partial class Player : MonoBehaviour {
         }
     }
 
+    
+
     ///////////////Utilities jackpot Effects//////////////////////////
+
+    private void DrainUtility(int tier)
+    {
+        int drainValue = tier + 1;
+
+        for (int j = 0; j < tier; j++)
+        {
+            GeneralSquare targetEnemy = enemyPlayer.GiveRandomTarget();
+            GeneralSquare targetAlly = GiveRandomTarget(false);
+
+            targetEnemy.ApplyDamage(drainValue);
+            targetAlly.Heal(drainValue);
+        }
+
+
+    }
+
+    private void BarrierUtility(int tier)
+    {
+        if(!HasBarrier())
+        {
+
+            Barrier.gameObject.SetActive(true);
+            Barrier.ResetStatus();
+            tier--;
+        }
+
+        Barrier.EarnExperience(4 * tier);//1 level per tier
+    }
+
+    private void BonusAtkUtility(int tier)
+    {
+        foreach(GeneralSquare gs in mySquares)
+        {
+            if (gs.gameObject.activeInHierarchy)
+                gs.bonusAtk = tier;
+        }
+    }
 
     ///////////////Offensives jackpot Effects//////////////////////// 
 
     private void AreaOffensive(int tier)
     {
         int damage = 2 * tier;
-        if (enemyPlayer.HasCombatSquare())
+        if(enemyPlayer.HasBarrier())
+        {
+            enemyPlayer.Barrier.ApplyDamage(damage);
+        }
+        else if (enemyPlayer.HasCombatSquare())
         {
             foreach (GeneralSquare gs in enemyPlayer.mySquares)
             {
@@ -82,7 +159,12 @@ public partial class Player : MonoBehaviour {
     {
         for (int j = 0; j < tier; j++)
         {
-            int i;
+            GeneralSquare target = enemyPlayer.GiveRandomTarget(false);
+            if (target == enemyPlayer.MainSquare) return;
+
+            target.SetDisabled(true);
+
+            /*int i;
             if (enemyPlayer.HasCombatSquare())
             {
                 do
@@ -93,13 +175,16 @@ public partial class Player : MonoBehaviour {
                 enemyPlayer.mySquares[i].SetDisabled(true);
             }
             else
-                return;
+                return;*/
         }
     }
 
     private void DirectOffensive(int tier)
     {
         int damage = 2 * tier;
-        enemyPlayer.MainSquare.ApplyDamage(damage);
+        if (enemyPlayer.HasBarrier())
+            enemyPlayer.Barrier.ApplyDamage(damage);
+        else
+            enemyPlayer.MainSquare.ApplyDamage(damage);
     }
 }

@@ -61,6 +61,7 @@ public class GameControl : MonoBehaviour {
             foreach(GeneralSquare gs in p.mySquares)
             {
                 gs.SetDisabled(false);
+                gs.bonusAtk = 0;
             }
         }
     }

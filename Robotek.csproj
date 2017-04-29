@@ -85,6 +85,7 @@
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\Player_JackPotProcess.cs" />
     <Compile Include="Assets\Scripts\PopUp.cs" />
+    <Compile Include="Assets\Scripts\SquareTypeScripts\Barrier.cs" />
     <Compile Include="Assets\Scripts\SquareTypeScripts\GeneralSquare.cs" />
     <Compile Include="Assets\Scripts\SquareTypeScripts\HealSquare.cs" />
     <Compile Include="Assets\Scripts\SquareTypeScripts\ShooterSquare.cs" />

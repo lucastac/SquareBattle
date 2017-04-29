@@ -9,6 +9,7 @@ public class GeneralSquare : MonoBehaviour {
     public int attack; //amount of attack of a square
     public int level; //actual level (start with 1 and max is 3)
     public int experience;//actual experience (2 for level 1-2 and 4 for level 2-3)
+    public int bonusAtk = 0; //amount of extra attack until the end of turn
 
     public Player myPlayer;
     public GameObject popUpPrefab; //prefab for a popUp
@@ -38,9 +39,15 @@ public class GeneralSquare : MonoBehaviour {
 
     public virtual void LatedAct()
     {
+        
+        GeneralSquare target = myPlayer.enemyPlayer.GiveRandomTarget();
+        /*
         int i;
-        GeneralSquare target;
-        if (myPlayer.enemyPlayer.HasCombatSquare())
+        
+        if(myPlayer.enemyPlayer.HasBarrier())
+        {
+            target = myPlayer.enemyPlayer.Barrier;
+        }else if (myPlayer.enemyPlayer.HasCombatSquare())
         {
             do
             {
@@ -50,10 +57,9 @@ public class GeneralSquare : MonoBehaviour {
             target = myPlayer.enemyPlayer.mySquares[i];
         }
         else
-            target = myPlayer.enemyPlayer.MainSquare;
+            target = myPlayer.enemyPlayer.MainSquare;*/
 
-
-        target.ApplyDamage(attack);
+        target.ApplyDamage(attack + bonusAtk);
     }
 
     public virtual void ResetStatus()
@@ -111,7 +117,7 @@ public class GeneralSquare : MonoBehaviour {
     public virtual void SetDisabled(bool disable)
     {
         isDisabled = disable;
-        anim.enabled = !isDisabled;
+        if(anim != null) anim.enabled = !isDisabled;
     }
 
     
