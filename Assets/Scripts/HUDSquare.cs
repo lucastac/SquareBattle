@@ -31,13 +31,17 @@ public class HUDSquare : MonoBehaviour {
         if(healthSlider != null)
         {
             healthSlider.maxValue = targetSquare.maxHealth;
-            healthSlider.value = targetSquare.health;
+            if (healthSlider.value != targetSquare.health)
+                healthSlider.value += (targetSquare.health - healthSlider.value) * 0.1f;
         }
 
         if (expSlider != null)
         {
-            expSlider.maxValue = targetSquare.level < 3 ? targetSquare.maxHealth : 1;
-            expSlider.value = targetSquare.level < 3 ? targetSquare.health : 1;
+            expSlider.maxValue = targetSquare.level < 3 ? targetSquare.level * 2 : 1;
+            if (expSlider.value < targetSquare.experience)
+                expSlider.value += (targetSquare.experience - expSlider.value) * 0.1f;
+            else
+                expSlider.value = targetSquare.level < 3 ? targetSquare.experience : 1;
         }
     }
 }

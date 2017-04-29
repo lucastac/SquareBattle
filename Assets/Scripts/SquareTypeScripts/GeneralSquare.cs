@@ -15,10 +15,13 @@ public class GeneralSquare : MonoBehaviour {
 
     protected int initialMaxHealth; //maxHealth on level 1
     protected int initialAttack; //attack on level 1
+    protected bool isDisabled = false;
+    public Animator anim;
 	// Use this for initialization
 	public virtual void Start () {
         initialMaxHealth = maxHealth;
         initialAttack = attack;
+        anim = GetComponentInChildren<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -28,6 +31,8 @@ public class GeneralSquare : MonoBehaviour {
 
     public void Act()
     {
+        if (isDisabled) return;
+
         Invoke("LatedAct", 0.5f);
     }
 
@@ -58,6 +63,7 @@ public class GeneralSquare : MonoBehaviour {
         health = maxHealth;
         level = 1;
         experience = 0;
+        SetDisabled(false);
     }
 
     public virtual void ApplyDamage(int damage)
@@ -100,6 +106,12 @@ public class GeneralSquare : MonoBehaviour {
             EarnExperience(0);
         }
         else experience = 0;
+    }
+
+    public virtual void SetDisabled(bool disable)
+    {
+        isDisabled = disable;
+        anim.enabled = !isDisabled;
     }
 
     

@@ -55,5 +55,13 @@ public class GameControl : MonoBehaviour {
             players[i].myJackpot.gameObject.SetActive(false);
 
         players[turn].myJackpot.gameObject.SetActive(true);
+
+        foreach(Player p in players)
+        {
+            foreach(GeneralSquare gs in p.mySquares)
+            {
+                gs.SetDisabled(false);
+            }
+        }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public partial class Player : MonoBehaviour {
 
     public List<GeneralSquare> mySquares;
     public GeneralSquare MainSquare;
@@ -33,7 +33,8 @@ public class Player : MonoBehaviour {
     {
         switch(type)
         {
-            case 0: ProcessUnityJackpot(result);
+            case 0:
+                ProcessUnityJackpot(result);
                 break;
 
             case 1:
@@ -41,33 +42,13 @@ public class Player : MonoBehaviour {
                 break;
 
             case 2:
-                ProcessOfensiveJackpot(result);
+                ProcessOffensiveJackpot(result);
                 break;
         }
     }
 
-    private void ProcessUnityJackpot(int[] result)
-    {
-        for(int i = 0; i < result.Length; i++)
-        {
-            if (mySquares[result[i]].gameObject.activeInHierarchy)
-                mySquares[result[i]].EarnExperience(1);
-            else
-            {
-                mySquares[result[i]].ResetStatus();
-                mySquares[result[i]].gameObject.SetActive(true);                
-            }
-        }
-    }
+    
 
-    private void ProcessUtilityJackpot(int[] result)
-    {
-
-    }
-
-    private void ProcessOfensiveJackpot(int[] result)
-    {
-
-    }
+    
 
 }

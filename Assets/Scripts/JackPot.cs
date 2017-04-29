@@ -19,6 +19,7 @@ public class JackPot : MonoBehaviour {
 
     protected List<Sprite[]> iconsPerJackpot = new List<Sprite[]>(); //the icons for each jackpot type;
     protected int[] indexes = { 0, 0, 0 }; //Index on the jackpot for each pot
+    int actualType = 0; 
 
     private bool rolling = false;
     
@@ -32,7 +33,18 @@ public class JackPot : MonoBehaviour {
 
     private void OnEnable()
     {
+        if(iconsPerJackpot.Count < 3)
+        {
+            //if the start function did not had called, then wait and try again
+            Invoke("OnEnable", 0.1f);
+            return;
+        }
+
         buttonRoll.gameObject.SetActive(true);
+        for(int i = 0; i < jackpotSlot.Length; i++)
+        {
+            jackpotSlot[i].sprite = iconsPerJackpot[actualType][i];
+        }
     }
 
     // Update is called once per frame
@@ -52,8 +64,8 @@ public class JackPot : MonoBehaviour {
             {
                 if (timeCount[i] >= periodRolling[i])
                 {
-                    indexes[i] = (indexes[i] + 1) % iconsPerJackpot[0].Length;
-                    jackpotSlot[i].sprite = iconsPerJackpot[0][indexes[i]];
+                    indexes[i] = (indexes[i] + 1) % iconsPerJackpot[actualType].Length;
+                    jackpotSlot[i].sprite = iconsPerJackpot[actualType][indexes[i]];
                     timeCount[i] = 0;
                 }
             }
@@ -72,8 +84,8 @@ public class JackPot : MonoBehaviour {
     {
         for (int i = 0; i < jackpotSlot.Length; i++)
         {
-            indexes[i] = Random.Range(0, iconsPerJackpot[0].Length);
-            jackpotSlot[i].sprite = iconsPerJackpot[0][indexes[i]];
+            indexes[i] = Random.Range(0, iconsPerJackpot[actualType].Length);
+            jackpotSlot[i].sprite = iconsPerJackpot[actualType][indexes[i]];
         }
         rolling = true;
         buttonText.text = "Stop !";
@@ -88,7 +100,7 @@ public class JackPot : MonoBehaviour {
         }
         buttonText.text = "Roll !";
         buttonRoll.gameObject.SetActive(false);
-        myPlayer.ProcessJackpotResult(indexes, 0);
+        myPlayer.ProcessJackpotResult(indexes, actualType);
 
         Invoke("EndPlayerTurn", 1);
     }
@@ -98,4 +110,12 @@ public class JackPot : MonoBehaviour {
         GameControl.singleton.EndTurn();        
     }
 
+    public void ChangeType(int newType)
+    {
+        actualType = newType;
+        for (int i = 0; i < jackpotSlot.Length; i++)
+        {
+            jackpotSlot[i].sprite = iconsPerJackpot[actualType][i];
+        }
+    }
 }

@@ -83,6 +83,7 @@
     <Compile Include="Assets\Scripts\HUDSquare.cs" />
     <Compile Include="Assets\Scripts\JackPot.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\Player_JackPotProcess.cs" />
     <Compile Include="Assets\Scripts\PopUp.cs" />
     <Compile Include="Assets\Scripts\SquareTypeScripts\GeneralSquare.cs" />
     <Compile Include="Assets\Scripts\SquareTypeScripts\HealSquare.cs" />
