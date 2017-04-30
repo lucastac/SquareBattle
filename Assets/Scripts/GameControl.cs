@@ -31,13 +31,15 @@ public class GameControl : MonoBehaviour {
         
 
         turn = (turn + 1) % players.Length;
-        Invoke("StartTurn", 5);
+        
 
         if(isFirstTurn)
         {
             isFirstTurn = false;
+            Invoke("StartTurn", 1);
             return;
-        }
+        }else
+            Invoke("StartTurn", 5);
 
         foreach (Player p in players)
         {

@@ -9,7 +9,28 @@ public class GeneralSquare : MonoBehaviour {
     public int attack; //amount of attack of a square
     public int level; //actual level (start with 1 and max is 3)
     public int experience;//actual experience (2 for level 1-2 and 4 for level 2-3)
-    public int bonusAtk = 0; //amount of extra attack until the end of turn
+    private int BonusAtk = 0;
+    public int bonusAtk {
+
+        get
+        {
+            return this.BonusAtk;
+        }
+
+        set
+        {
+            this.BonusAtk = value;
+            if (bonusAttackEffect != null)
+            {
+                if (bonusAtk > 0)
+                    bonusAttackEffect.SetActive(true);
+                else
+                    bonusAttackEffect.SetActive(false);
+            }
+
+        }
+    } //amount of extra attack until the end of turn
+    public GameObject bonusAttackEffect; //particle that indicates when a bonus attack is activated
 
     public Player myPlayer;
     public GameObject popUpPrefab; //prefab for a popUp
@@ -24,6 +45,7 @@ public class GeneralSquare : MonoBehaviour {
         initialMaxHealth = maxHealth;
         initialAttack = attack;
         anim = GetComponentInChildren<Animator>();
+        bonusAtk = 0;
 	}
 	
 	// Update is called once per frame

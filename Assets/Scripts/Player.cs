@@ -9,8 +9,9 @@ public partial class Player : MonoBehaviour {
     public GeneralSquare Barrier;
     public Player enemyPlayer;
     public JackPot myJackpot;
-	// Use this for initialization
-	void Start () {
+    public GameObject directDamageParticlePrefab;
+    // Use this for initialization
+    void Start () {
 		
 	}
 	

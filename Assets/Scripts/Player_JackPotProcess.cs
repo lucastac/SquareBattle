@@ -103,7 +103,8 @@ public partial class Player : MonoBehaviour {
             GeneralSquare targetEnemy = enemyPlayer.GiveRandomTarget();
             GeneralSquare targetAlly = GiveRandomTarget(false);
 
-            targetEnemy.ApplyDamage(drainValue);
+            LatedDamageOnTarget(targetEnemy, drainValue);
+            //targetEnemy.ApplyDamage(drainValue);
             targetAlly.Heal(drainValue);
         }
 
@@ -139,21 +140,28 @@ public partial class Player : MonoBehaviour {
         int damage = 2 * tier;
         if(enemyPlayer.HasBarrier())
         {
-            enemyPlayer.Barrier.ApplyDamage(damage);
+            LatedDamageOnTarget(enemyPlayer.Barrier, damage);
+
+            //enemyPlayer.Barrier.ApplyDamage(damage);
         }
         else if (enemyPlayer.HasCombatSquare())
         {
             foreach (GeneralSquare gs in enemyPlayer.mySquares)
             {
                 if (gs.IsAlive())
-                    gs.ApplyDamage(damage);
+                    LatedDamageOnTarget(gs, damage);
+                //gs.ApplyDamage(damage);
             }
         }
         else
         {
-            enemyPlayer.MainSquare.ApplyDamage(damage);
+            LatedDamageOnTarget(enemyPlayer.MainSquare, damage);
+            //enemyPlayer.MainSquare.ApplyDamage(damage);
         }
     }
+
+   
+
 
     private void BlockOffensive(int tier)
     {
@@ -170,8 +178,28 @@ public partial class Player : MonoBehaviour {
     {
         int damage = 2 * tier;
         if (enemyPlayer.HasBarrier())
-            enemyPlayer.Barrier.ApplyDamage(damage);
+            LatedDamageOnTarget(enemyPlayer.Barrier, damage);
+        //enemyPlayer.Barrier.ApplyDamage(damage);
         else
-            enemyPlayer.MainSquare.ApplyDamage(damage);
+            LatedDamageOnTarget(enemyPlayer.MainSquare, damage);
+        //enemyPlayer.MainSquare.ApplyDamage(damage);
+    }
+
+    private void LatedDamageOnTarget(GeneralSquare target,int damage)
+    {
+        Destroy(Instantiate<GameObject>(directDamageParticlePrefab,
+                target.transform.position + new Vector3(0, 0, -0.25f),
+                directDamageParticlePrefab.transform.rotation), 1);
+
+        StartCoroutine(WaitToDamageOnTarget(target, damage, 0.5f));
+    }
+
+    IEnumerator WaitToDamageOnTarget(GeneralSquare target, int damage, float delayTime)
+    {
+
+        yield return new WaitForSeconds(delayTime);
+
+        target.ApplyDamage(damage);
+
     }
 }

@@ -48,7 +48,13 @@ public class Projectil : MonoBehaviour {
     public virtual void ReachTarget()
     {
         if (hitEffect != null)
-            Instantiate<GameObject>(hitEffect, target.transform.position + new Vector3(0, 0, -0.25f), hitEffect.transform.rotation).SetActive(true);
+        {
+           GameObject hit = Instantiate<GameObject>(hitEffect
+                , target.transform.position + new Vector3(0, 0, -0.25f),
+                hitEffect.transform.rotation);
+            hit.SetActive(true);
+            Destroy(hit, 1);
+        }
         Destroy(gameObject);
     }
 }

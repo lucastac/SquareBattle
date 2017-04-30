@@ -21,10 +21,15 @@ public class HealSquare : GeneralSquare {
 
         for (int j = 0; j < number_of_heal_targets; j++)
         {
-            GeneralSquare target = myPlayer.GiveRandomTarget(false);
-            ShootOnTarget(target);
+            Invoke("LatedHeal", 0.5f * j);
             //target.Heal(attack + bonusAtk);
         }
+    }
+
+    private void LatedHeal()
+    {
+        GeneralSquare target = myPlayer.GiveRandomTarget(false);
+        ShootOnTarget(target);
     }
 
     public override void ResetStatus()
