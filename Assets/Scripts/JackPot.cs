@@ -17,7 +17,7 @@ public class JackPot : MonoBehaviour {
     public Sprite[] iconsJackpotSlot2;
     public Sprite[] iconsJackpotSlot3;
 
-    protected List<Sprite[]> iconsPerJackpot = new List<Sprite[]>(); //the icons for each jackpot type;
+    public List<Sprite[]> iconsPerJackpot = new List<Sprite[]>(); //the icons for each jackpot type;
     protected int[] indexes = { 0, 0, 0 }; //Index on the jackpot for each pot
     int actualType = 0; 
 
@@ -39,8 +39,9 @@ public class JackPot : MonoBehaviour {
             Invoke("OnEnable", 0.1f);
             return;
         }
+        if(GameControl.actualGameType !=2 || GameControl.turn != 1)
+            buttonRoll.gameObject.SetActive(true);
 
-        buttonRoll.gameObject.SetActive(true);
         for(int i = 0; i < jackpotSlot.Length; i++)
         {
             jackpotSlot[i].sprite = iconsPerJackpot[actualType][i];

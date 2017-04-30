@@ -6,15 +6,17 @@ using UnityEngine.UI;
 public class GameControl : MonoBehaviour {
 
     public static GameControl singleton;
+    public static int actualGameType;//1 = PvP, 2 = PvAI
 
     public GameObject endGameWindow;
     public Player[] players;
-    public int turn = 0;
+    public static int turn = 0;
     private bool isFirstTurn = true; //on the end of first turn, no one attacks
 	// Use this for initialization
 	void Start () {
         singleton = this;
 
+        actualGameType = PlayerPrefs.GetInt("gameMode", 1);
         for (int i = 1; i < players.Length; i++)
             players[i].myJackpot.gameObject.SetActive(false);
 
@@ -77,6 +79,11 @@ public class GameControl : MonoBehaviour {
                 gs.SetDisabled(false);
                 gs.bonusAtk = 0;
             }
+        }
+
+        if(actualGameType == 2 && turn == 1)
+        {
+            Artificial_Intelligence.singleton.YourTurn();
         }
     }
 

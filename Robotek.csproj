@@ -78,6 +78,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Artificial_Intelligence.cs" />
     <Compile Include="Assets\Scripts\ChangeScene.cs" />
     <Compile Include="Assets\Scripts\ChangingSizeAnimation.cs" />
     <Compile Include="Assets\Scripts\GameControl.cs" />
