@@ -15,20 +15,15 @@ public class HealSquare : GeneralSquare {
     public override void LatedAct()
     {
         if (level == 3)
-            myPlayer.MainSquare.Heal(attack + bonusAtk);
+            ShootOnTarget(myPlayer.MainSquare);
+           // myPlayer.MainSquare.Heal(attack + bonusAtk);
 
 
         for (int j = 0; j < number_of_heal_targets; j++)
         {
             GeneralSquare target = myPlayer.GiveRandomTarget(false);
-            target.Heal(attack + bonusAtk);
-            /*int i;
-            do
-            {
-                i = Random.Range(0, myPlayer.mySquares.Count);
-            } while (!myPlayer.mySquares[i].gameObject.activeInHierarchy);
-
-            myPlayer.mySquares[i].Heal(attack);*/
+            ShootOnTarget(target);
+            //target.Heal(attack + bonusAtk);
         }
     }
 

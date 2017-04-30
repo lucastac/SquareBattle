@@ -13,6 +13,7 @@ public class GeneralSquare : MonoBehaviour {
 
     public Player myPlayer;
     public GameObject popUpPrefab; //prefab for a popUp
+    public GameObject attackProjectil; //also can be a healing projectil
 
     protected int initialMaxHealth; //maxHealth on level 1
     protected int initialAttack; //attack on level 1
@@ -39,27 +40,20 @@ public class GeneralSquare : MonoBehaviour {
 
     public virtual void LatedAct()
     {
-        
+
         GeneralSquare target = myPlayer.enemyPlayer.GiveRandomTarget();
-        /*
-        int i;
-        
-        if(myPlayer.enemyPlayer.HasBarrier())
-        {
-            target = myPlayer.enemyPlayer.Barrier;
-        }else if (myPlayer.enemyPlayer.HasCombatSquare())
-        {
-            do
-            {
-                i = Random.Range(0, myPlayer.enemyPlayer.mySquares.Count);
-            } while (!myPlayer.enemyPlayer.mySquares[i].gameObject.activeInHierarchy);
 
-            target = myPlayer.enemyPlayer.mySquares[i];
-        }
-        else
-            target = myPlayer.enemyPlayer.MainSquare;*/
+        ShootOnTarget(target);
 
-        target.ApplyDamage(attack + bonusAtk);
+        //target.ApplyDamage(attack + bonusAtk);
+    }
+
+    public void ShootOnTarget(GeneralSquare target)
+    {
+        GameObject newProjectil = Instantiate<GameObject>(attackProjectil);
+        Projectil pro = newProjectil.GetComponent<Projectil>();
+
+        pro.Go(this, target, 3, attack + bonusAtk);
     }
 
     public virtual void ResetStatus()
@@ -92,6 +86,11 @@ public class GeneralSquare : MonoBehaviour {
         Text t = popup.GetComponentInChildren<Text>();
         t.text = "+" + amountHeal;
         t.color = Color.green;
+    }
+
+    public bool IsAlive()
+    {
+        return health > 0 && gameObject.activeInHierarchy;
     }
 
     public virtual void EarnExperience(int xp)

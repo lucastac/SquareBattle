@@ -8,7 +8,7 @@ public partial class Player : MonoBehaviour {
     {
         for (int i = 0; i < result.Length; i++)
         {
-            if (mySquares[result[i]].gameObject.activeInHierarchy)
+            if (mySquares[result[i]].IsAlive())
                 mySquares[result[i]].EarnExperience(1);
             else
             {
@@ -127,7 +127,7 @@ public partial class Player : MonoBehaviour {
     {
         foreach(GeneralSquare gs in mySquares)
         {
-            if (gs.gameObject.activeInHierarchy)
+            if (gs.IsAlive())
                 gs.bonusAtk = tier;
         }
     }
@@ -145,7 +145,7 @@ public partial class Player : MonoBehaviour {
         {
             foreach (GeneralSquare gs in enemyPlayer.mySquares)
             {
-                if (gs.gameObject.activeInHierarchy)
+                if (gs.IsAlive())
                     gs.ApplyDamage(damage);
             }
         }
@@ -163,19 +163,6 @@ public partial class Player : MonoBehaviour {
             if (target == enemyPlayer.MainSquare) return;
 
             target.SetDisabled(true);
-
-            /*int i;
-            if (enemyPlayer.HasCombatSquare())
-            {
-                do
-                {
-                    i = Random.Range(0, enemyPlayer.mySquares.Count);
-                } while (!enemyPlayer.mySquares[i].gameObject.activeInHierarchy);
-
-                enemyPlayer.mySquares[i].SetDisabled(true);
-            }
-            else
-                return;*/
         }
     }
 

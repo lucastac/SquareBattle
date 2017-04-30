@@ -21,14 +21,14 @@ public partial class Player : MonoBehaviour {
 
     public bool HasBarrier()
     {
-        return Barrier.gameObject.activeInHierarchy;
+        return Barrier.IsAlive();
     }
 
     public bool HasCombatSquare()
     {
         foreach(GeneralSquare square in mySquares)
         {
-            if (square.gameObject.activeInHierarchy)
+            if (square.IsAlive())
                 return true;
         }
 
@@ -46,7 +46,7 @@ public partial class Player : MonoBehaviour {
             do
             {
                 i = Random.Range(0, enemyPlayer.mySquares.Count);
-            } while (!mySquares[i].gameObject.activeInHierarchy);
+            } while (!mySquares[i].IsAlive());
             target = mySquares[i];
         }
         else
