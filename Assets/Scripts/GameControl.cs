@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameControl : MonoBehaviour {
 
     public static GameControl singleton;
 
+    public GameObject endGameWindow;
     public Player[] players;
     public int turn = 0;
     private bool isFirstTurn = true; //on the end of first turn, no one attacks
@@ -54,6 +56,16 @@ public class GameControl : MonoBehaviour {
         for (int i = 0; i < players.Length; i++)
             players[i].myJackpot.gameObject.SetActive(false);
 
+
+        for(int i = 0; i < players.Length; i++)
+        {
+            if(!players[i].MainSquare.gameObject.activeInHierarchy)
+            {
+                DeclareWinner((i + 1) % players.Length);
+                return;
+            }
+        }
+
         players[turn].myJackpot.gameObject.SetActive(true);
 
         foreach(Player p in players)
@@ -64,5 +76,21 @@ public class GameControl : MonoBehaviour {
                 gs.bonusAtk = 0;
             }
         }
+    }
+
+    private void DeclareWinner(int winnerID)
+    {
+        endGameWindow.SetActive(true);
+        Text winText = endGameWindow.GetComponentInChildren<Text>();
+        if(winnerID == 0)
+        {
+            winText.text = "Blue Win";            
+        }
+        else
+        {
+            winText.text = "Red Win";
+        }
+
+        winText.color = players[winnerID].MainSquare.GetComponentInChildren<SpriteRenderer>().color;
     }
 }

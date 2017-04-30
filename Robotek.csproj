@@ -78,10 +78,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\ChangeScene.cs" />
     <Compile Include="Assets\Scripts\ChangingSizeAnimation.cs" />
     <Compile Include="Assets\Scripts\GameControl.cs" />
     <Compile Include="Assets\Scripts\HUDSquare.cs" />
     <Compile Include="Assets\Scripts\JackPot.cs" />
+    <Compile Include="Assets\Scripts\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\Player_JackPotProcess.cs" />
     <Compile Include="Assets\Scripts\PopUp.cs" />
