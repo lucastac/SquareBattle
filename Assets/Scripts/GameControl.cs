@@ -147,10 +147,23 @@ public class GameControl : MonoBehaviour {
 
     public void PrintHiScore()
     {
+
+        string fileName = "NewHighScore.png";
+
         printScreenButton.SetActive(false);
         backButton.SetActive(false);
-        Application.CaptureScreenshot("NewHighScore.png");
+        Application.CaptureScreenshot(fileName);
         Invoke("enableBackButton", 0.2f);
+
+
+        //the following code was not working, so was removed. The score screen are stored on the Data folder of the application
+
+        /*string origin = System.IO.Path.Combine(Application.persistentDataPath, fileName);
+        string destination = "/sdcard/ScreenCaptureSB/" + fileName;
+        if (System.IO.File.Exists(origin))
+        {
+            System.IO.File.Move(origin, destination);
+        }*/   
 
     }
 
