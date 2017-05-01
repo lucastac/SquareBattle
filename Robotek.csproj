@@ -91,6 +91,7 @@
     <Compile Include="Assets\Scripts\Projectil\DamageProjectil.cs" />
     <Compile Include="Assets\Scripts\Projectil\HealProjectil.cs" />
     <Compile Include="Assets\Scripts\Projectil\Projectil.cs" />
+    <Compile Include="Assets\Scripts\ShowHighScore.cs" />
     <Compile Include="Assets\Scripts\SquareTypeScripts\Barrier.cs" />
     <Compile Include="Assets\Scripts\SquareTypeScripts\GeneralSquare.cs" />
     <Compile Include="Assets\Scripts\SquareTypeScripts\HealSquare.cs" />
